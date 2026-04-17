@@ -35,8 +35,13 @@ function Home() {
                 <Filter setFilter={setFilter} />
             </div>
 
-
-
+            <div className="grid md:grid-cols-3 gap-4">
+                {finalPlayers.map(player => (
+                    <PlayerCard key={player.player_id} player={player} />
+                ))}
+            </div>
         </div>
     );
 }
+
+export default Home;
