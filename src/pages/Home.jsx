@@ -43,38 +43,41 @@ function Home() {
     }, [searchTerm, filter]);
 
     return (
-        <div className="min-h-screen bg-gray-50 p-6">
-            <h1 className="text-4xl font-bold text-center mb-8">Ranking de Pádel</h1>
-
-            <div className="flex justify-center gap-4 mb-8">
-                <SearchBar search={searchTerm} setSearch={setSearchTerm} />
-                <Filter setFilter={setFilter} />
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                {jugadoresPaginados.map(player => (
-                    <PlayerCard key={player.player_id} player={player} />
-                ))}
-            </div>
-
-            {totalPages > 1 && (
-                <div className="flex justify-center gap-2">
-                    <button onClick={() => setPage(1)} disabled={page === 1} className="px-3 py-2 rounded bg-gray-300 hover:bg-gray-400 disabled:opacity-50">«</button>
-                    {Array.from({length: Math.min(5, totalPages)}, (_, i) => {
-                        const start = Math.max(1, Math.min(page - 2, totalPages - 4));
-                        return start + i;
-                    }).map(p => (
-                        <button
-                            key={p}
-                            onClick={() => setPage(p)}
-                            className={`px-3 py-2 rounded ${p === page ? 'bg-blue-600 text-white' : 'bg-gray-300 hover:bg-gray-400'}`}
-                        >
-                            {p}
-                        </button>
-                    ))}
-                    <button onClick={() => setPage(totalPages)} disabled={page === totalPages} className="px-3 py-2 rounded bg-gray-300 hover:bg-gray-400 disabled:opacity-50">»</button>
+        <div className="min-h-screen bg-blue-50">
+            <header className="bg-blue-200 py-6 mb-8">
+                <h1 className="text-4xl font-bold text-center mb-4">Ranking de Pádel</h1>
+                <div className="flex justify-center gap-4 px-6">
+                    <SearchBar search={searchTerm} setSearch={setSearchTerm} />
+                    <Filter setFilter={setFilter} />
                 </div>
-            )}
+            </header>
+
+            <div className="p-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    {jugadoresPaginados.map(player => (
+                        <PlayerCard key={player.player_id} player={player} />
+                    ))}
+                </div>
+
+                {totalPages > 1 && (
+                    <div className="flex justify-center gap-2">
+                        <button onClick={() => setPage(1)} disabled={page === 1} className="px-3 py-2 rounded bg-gray-300 hover:bg-gray-400 disabled:opacity-50">«</button>
+                        {Array.from({length: Math.min(5, totalPages)}, (_, i) => {
+                            const start = Math.max(1, Math.min(page - 2, totalPages - 4));
+                            return start + i;
+                        }).map(p => (
+                            <button
+                                key={p}
+                                onClick={() => setPage(p)}
+                                className={`px-3 py-2 rounded ${p === page ? 'bg-blue-600 text-white' : 'bg-gray-300 hover:bg-gray-400'}`}
+                            >
+                                {p}
+                            </button>
+                        ))}
+                        <button onClick={() => setPage(totalPages)} disabled={page === totalPages} className="px-3 py-2 rounded bg-gray-300 hover:bg-gray-400 disabled:opacity-50">»</button>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }
