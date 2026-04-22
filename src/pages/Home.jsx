@@ -10,8 +10,12 @@ function Home() {
     const [players, setPlayers] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [filter, setFilter] = useState("");
+    const [countryFilter, setCountryFilter] = useState("");
     const [page, setPage] = useState(1);
     const itemsPerPage = 100;
+
+    // Obtener lista única de países
+    const countries = [...new Set(players.map(p => p.country_name))].sort();
 
     useEffect(() => {
         fetch(API_URL)
@@ -26,11 +30,12 @@ function Home() {
     // Filtrar jugadores que coincidan con el término de búsqueda
     const jugadorFiltrado = players.filter(p => `${p.name} ${p.surname}`.toLowerCase().includes(searchTerm.toLowerCase()));
 
-    //Aplica un filtro aparte por ranking
+    //Aplica un filtro aparte por ranking y país
     const jugadoresResultantes = jugadorFiltrado.filter(p => {
-        if (filter === "top10") return p.rank <= 10;
-        if (filter === "top25") return p.rank <= 25;
-        if (filter === "top50") return p.rank <= 50;
+        if (filter === "top10" && p.rank > 10) return false;
+        if (filter === "top25" && p.rank > 25) return false;
+        if (filter === "top50" && p.rank > 50) return false;
+        if (countryFilter && p.country_name !== countryFilter) return false;
         return true;
     });
 
@@ -40,7 +45,7 @@ function Home() {
 
     useEffect(() => {
         setPage(1);
-    }, [searchTerm, filter]);
+    }, [searchTerm, filter, countryFilter]);
 
     return (
         <div className="min-h-screen bg-blue-50">
@@ -49,6 +54,16 @@ function Home() {
                 <div className="flex justify-center gap-4 px-6">
                     <SearchBar search={searchTerm} setSearch={setSearchTerm} />
                     <Filter setFilter={setFilter} />
+                    <select 
+                        value={countryFilter} 
+                        onChange={(e) => setCountryFilter(e.target.value)}
+                        className="border p-2 rounded bg-white"
+                    >
+                        <option value="">Todos los países</option>
+                        {countries.map(country => (
+                            <option key={country} value={country}>{country}</option>
+                        ))}
+                    </select>
                 </div>
             </header>
 
