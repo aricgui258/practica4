@@ -1,3 +1,5 @@
+// Componente para la barra de búsqueda de jugadores
+
 function SearchBar({search, setSearch}) {
     return (
         <input type="text"

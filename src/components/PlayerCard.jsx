@@ -1,3 +1,5 @@
+// Componente para mostrar la información del jugador en una tarjeta
+
 function PlayerCard({player}) {
   return (
     <div className="bg-white shadow-md rounded-xl p-4 hover:scale-105 transition">

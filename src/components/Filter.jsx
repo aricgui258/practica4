@@ -1,3 +1,5 @@
+//Componente para filtrar jugadores por ranking
+
 function Filter({setFilter}) {
     return(
         <select onChange={(e) => setFilter(e.target.value)} 
