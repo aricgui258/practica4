@@ -12,7 +12,7 @@ function Home() {
     const [filter, setFilter] = useState("");
     const [countryFilter, setCountryFilter] = useState("");
     const [page, setPage] = useState(1);
-    const itemsPerPage = 100;
+    const itemsPerPage = 60;
 
     // Obtener lista única de países
     const countries = [...new Set(players.map(p => p.country_name))].sort();
